@@ -34,22 +34,30 @@ def is_int(n):
     return int(n) if float(n).is_integer() else float(n)
 
 
-
 def start():
     memory = 0
     while True:
         calc = input(msg_0)
         x, oper, y = calc.split()
         try:
-            x = memory if x == 'M' else is_int(x)
-            y = memory if y == 'M' else is_int(y)
-            check(x, y, oper)
+            x = memory if x == 'M' else float(x)
+            y = memory if y == 'M' else float(y)
+            check(is_int(x),is_int(y), oper)
             result = operation[oper](x, y)
             print(float(result))
             if input(msg_4) == 'y':
                 if is_one_digit(is_int(result)):
                     msg_index = 10
-
+                    while True:
+                        answer = input(globals()[f'msg_{msg_index}'])
+                        if answer == 'y':
+                            if msg_index < 12:
+                                msg_index += 1
+                            else:
+                                memory = result
+                                break
+                        elif answer == 'n':
+                            break
                 else:
                     memory = result
             if input(msg_5) == 'n':
